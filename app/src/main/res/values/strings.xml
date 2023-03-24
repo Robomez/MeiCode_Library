@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MeiCode_Library</string>
+    <string name="visit_url"><u>Visit book\'s website</u></string>
+    <string name="activity_all_books">All books</string>
+    <string name="activity_already_read">Books already read</string>
+    <string name="no_books">No books in this list</string>
+</resources>
