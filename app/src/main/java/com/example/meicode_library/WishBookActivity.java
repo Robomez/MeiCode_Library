@@ -10,14 +10,13 @@ import android.view.View;
 import android.widget.TextView;
 
 public class WishBookActivity extends AppCompatActivity {
+
     public static final String WISH_KEY = "wish";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wish);
-
-        setTitle("Wishlist");
 
         TextView txtNoWish = findViewById(R.id.txtNoWish);
         RecyclerView recyclerView = findViewById(R.id.wishRecView);

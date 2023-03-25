@@ -1,5 +1,7 @@
 package com.example.meicode_library;
 
+import androidx.annotation.NonNull;
+
 public class Book {
     private int id;
     private String name;
@@ -42,56 +44,28 @@ public class Book {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getAuthor() {
         return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public int getPages() {
         return pages;
     }
 
-    public void setPages(int pages) {
-        this.pages = pages;
-    }
-
     public String getImageUrl() {
         return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public String getShortDesc() {
         return shortDesc;
     }
 
-    public void setShortDesc(String shortDesc) {
-        this.shortDesc = shortDesc;
-    }
-
     public String getLongDesc() {
         return longDesc;
     }
 
-    public void setLongDesc(String longDesc) {
-        this.longDesc = longDesc;
-    }
-
     public String getVisitUrl() {
         return visitUrl;
-    }
-
-    public void setVisitUrl(String visitUrl) {
-        this.visitUrl = visitUrl;
     }
 
     @Override

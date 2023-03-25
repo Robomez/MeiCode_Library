@@ -10,14 +10,13 @@ import android.view.View;
 import android.widget.TextView;
 
 public class FavBookActivity extends AppCompatActivity {
+
     public static final String FAV_KEY = "favorites";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fav_book);
-
-        setTitle("Favorite books");
 
         TextView txtNoFav = findViewById(R.id.txtNoFav);
         RecyclerView recyclerView = findViewById(R.id.favRecView);

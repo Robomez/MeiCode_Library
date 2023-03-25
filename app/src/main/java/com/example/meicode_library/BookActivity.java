@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,33 +25,32 @@ public class BookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
 
-        setTitle("Book details");
-
         initViews();
 
         Intent intent = getIntent();
         if (intent != null) {
             int bookId = intent.getIntExtra(BOOK_ID_KEY, -1);
             if (bookId != -1) {
-                Book incomingBook = Utils.getInstance(this).getBookById(bookId);
-                if (incomingBook != null) {
-                    setData(incomingBook);
-
-                    handleAlrRead(incomingBook);
-                    handleWish(incomingBook);
-                    handleReading(incomingBook);
-                    handleFav(incomingBook);
-
-                    txtVisitUrl.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(BookActivity.this, WebsiteActivity.class);
-                            intent.putExtra("url", incomingBook.getVisitUrl());
-                            startActivity(intent);
-                        }
-                    });
-                }
+                handleIncomingBook(bookId);
             }
+        }
+    }
+
+    private void handleIncomingBook(int bookId) {
+        Book incomingBook = Utils.getInstance(this).getBookById(bookId);
+        if (incomingBook != null) {
+            setData(incomingBook);
+
+            handleAlrRead(incomingBook);
+            handleWish(incomingBook);
+            handleReading(incomingBook);
+            handleFav(incomingBook);
+
+            txtVisitUrl.setOnClickListener(view -> {
+                Intent intent1 = new Intent(BookActivity.this, WebsiteActivity.class);
+                intent1.putExtra("url", incomingBook.getVisitUrl());
+                startActivity(intent1);
+            });
         }
     }
 
@@ -63,6 +61,7 @@ public class BookActivity extends AppCompatActivity {
         for (Book b: readingBooks) {
             if (b.getId() == book.getId()) {
                 alrReadingBook = true;
+                break;
             }
         }
 
@@ -89,6 +88,7 @@ public class BookActivity extends AppCompatActivity {
         for (Book b: wishBooks) {
             if (b.getId() == book.getId()) {
                 alrWishedBook = true;
+                break;
             }
         }
 
@@ -115,22 +115,20 @@ public class BookActivity extends AppCompatActivity {
         for (Book b: alrReadBooks) {
             if (b.getId() == book.getId()) {
                 alrReadBook = true;
+                break;
             }
         }
 
         if (alrReadBook) {
             btnAlrRead.setEnabled(false);
         } else {
-            btnAlrRead.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (Utils.getInstance(BookActivity.this).addAlrRead(book)) {
-                        Toast.makeText(BookActivity.this, "Book added", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(BookActivity.this, AlrReadBookActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(BookActivity.this, "Smth went wrong, try again", Toast.LENGTH_SHORT).show();
-                    }
+            btnAlrRead.setOnClickListener(view -> {
+                if (Utils.getInstance(BookActivity.this).addAlrRead(book)) {
+                    Toast.makeText(BookActivity.this, "Book added", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(BookActivity.this, AlrReadBookActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(BookActivity.this, "Smth went wrong, try again", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -143,22 +141,20 @@ public class BookActivity extends AppCompatActivity {
         for (Book b: favBooks) {
             if (b.getId() == incomingBook.getId()) {
                 alrFavBook = true;
+                break;
             }
         }
 
         if (alrFavBook) {
             btnFav.setEnabled(false);
         } else {
-            btnFav.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (Utils.getInstance(BookActivity.this).addFav(incomingBook)) {
-                        Toast.makeText(BookActivity.this, "Added to favorites", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(BookActivity.this, FavBookActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(BookActivity.this, "SmthWntWrg,TrAgn", Toast.LENGTH_SHORT).show();
-                    }
+            btnFav.setOnClickListener(view -> {
+                if (Utils.getInstance(BookActivity.this).addFav(incomingBook)) {
+                    Toast.makeText(BookActivity.this, "Added to favorites", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(BookActivity.this, FavBookActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(BookActivity.this, "SmthWntWrg,TrAgn", Toast.LENGTH_SHORT).show();
                 }
             });
         }

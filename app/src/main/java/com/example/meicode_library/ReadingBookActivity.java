@@ -10,14 +10,13 @@ import android.view.View;
 import android.widget.TextView;
 
 public class ReadingBookActivity extends AppCompatActivity {
+
     public static final String READING_KEY = "reading now";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_book);
-
-        setTitle("Reading now");
 
         TextView txtNoReading = findViewById(R.id.txtNoBooksReading);
         RecyclerView recyclerView = findViewById(R.id.readingRecView);
@@ -28,8 +27,8 @@ public class ReadingBookActivity extends AppCompatActivity {
         adapter.setBooks(Utils.getInstance(this).getReadingBooks());
 
         if (adapter.getItemCount() == 0) {
-            recyclerView.setVisibility(View.GONE);
             txtNoReading.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
         } else {
             recyclerView.setVisibility(View.VISIBLE);
             txtNoReading.setVisibility(View.GONE);

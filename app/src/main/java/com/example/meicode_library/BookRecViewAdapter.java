@@ -1,6 +1,6 @@
 package com.example.meicode_library;
 
-import static com.example.meicode_library.AllBooksActivity.ALLBOOKS_KEY;
+import static com.example.meicode_library.AllBooksActivity.ALL_BOOKS_KEY;
 import static com.example.meicode_library.AlrReadBookActivity.ALRREAD_KEY;
 import static com.example.meicode_library.BookActivity.BOOK_ID_KEY;
 import static com.example.meicode_library.FavBookActivity.FAV_KEY;
@@ -26,6 +26,7 @@ import androidx.transition.TransitionManager;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class BookRecViewAdapter extends RecyclerView.Adapter<BookRecViewAdapter.ViewHolder> {
 
@@ -60,7 +61,7 @@ public class BookRecViewAdapter extends RecyclerView.Adapter<BookRecViewAdapter.
         holder.txtDesc.setText(books.get(position).getShortDesc());
 
         if (books.get(position).isExpanded()) {
-            showExpandedCard(holder, position);
+            showExpandedCard(holder);
         } else {
             TransitionManager.beginDelayedTransition(holder.parentItem);
             holder.expandedRelLayout.setVisibility(View.GONE);
@@ -68,11 +69,11 @@ public class BookRecViewAdapter extends RecyclerView.Adapter<BookRecViewAdapter.
         }
     }
 
-    private void showExpandedCard(ViewHolder holder, int position) {
+    private void showExpandedCard(ViewHolder holder) {
         TransitionManager.beginDelayedTransition(holder.parentItem);
         holder.expandedRelLayout.setVisibility(View.VISIBLE);
         holder.arrowDown.setVisibility(View.GONE);
-        if (parentActivity != ALLBOOKS_KEY) {
+        if (!Objects.equals(parentActivity, ALL_BOOKS_KEY)) {
             holder.txtDelete.setVisibility(View.VISIBLE);
             holder.txtDelete.setOnClickListener(view -> {
                 AlertDialog.Builder builder = new AlertDialog.Builder(adContext);
@@ -87,7 +88,6 @@ public class BookRecViewAdapter extends RecyclerView.Adapter<BookRecViewAdapter.
 
     /**
      * Methods: Get count, Get & Set books arr list
-     * @return
      */
     @Override
     public int getItemCount() {
@@ -156,22 +156,16 @@ public class BookRecViewAdapter extends RecyclerView.Adapter<BookRecViewAdapter.
             txtDesc = itemView.findViewById(R.id.txtShortDesc);
             txtDelete = itemView.findViewById(R.id.btnDelete);
 
-            arrowDown.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Book book = books.get(getAdapterPosition());
-                    book.setExpanded(!book.isExpanded());
-                    notifyItemChanged(getAdapterPosition());
-                }
+            arrowDown.setOnClickListener(view -> {
+                Book book = books.get(getAdapterPosition());
+                book.setExpanded(!book.isExpanded());
+                notifyItemChanged(getAdapterPosition());
             });
 
-            arrowUp.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Book book = books.get(getAdapterPosition());
-                    book.setExpanded(false);
-                    notifyItemChanged(getAdapterPosition());
-                }
+            arrowUp.setOnClickListener(view -> {
+                Book book = books.get(getAdapterPosition());
+                book.setExpanded(false);
+                notifyItemChanged(getAdapterPosition());
             });
         }
     }

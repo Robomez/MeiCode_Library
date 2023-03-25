@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class AlrReadBookActivity extends AppCompatActivity {
+
     public static final String ALRREAD_KEY = "already read books";
 
     @Override
@@ -24,11 +25,10 @@ public class AlrReadBookActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapter.setBooks(Utils.getInstance(this).getAlrReadBooks());
-        System.out.println(adapter.getItemCount());
 
         if (adapter.getItemCount() == 0) {
-            recyclerView.setVisibility(View.GONE);
             txtNoAlrRead.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
         } else {
             recyclerView.setVisibility(View.VISIBLE);
             txtNoAlrRead.setVisibility(View.GONE);
